@@ -1,5 +1,6 @@
 package com.api.todolist.entities.user;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -13,6 +14,7 @@ public class User {
 	@GeneratedValue
 	private Long id;
 
+	@Column(unique = true)
 	private String userEmail;
 
 	private String userPassword;

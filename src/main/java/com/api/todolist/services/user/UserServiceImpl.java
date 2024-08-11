@@ -23,11 +23,29 @@ public class UserServiceImpl implements UserService{
 		String encodedPassword = DigestUtils.sha256Hex(userVO.getUserPassword());
 
 		User user = new User();
-		user.setUserEmail(userVO.getUserPassword());
+		user.setUserEmail(userVO.getUserEmail());
 		user.setUserName(userVO.getUserName());
 		user.setUserPassword(encodedPassword);
 
 		userRepository.save(user);
+	}
+
+	@Override
+	public UserVO loginUser(UserVO userVO) throws Exception {
+		if (userVO == null || userVO.getUserEmail() == null || userVO.getUserPassword() == null) {
+			throw new Exception();
+		}
+
+		String encodedPassword = DigestUtils.sha256Hex(userVO.getUserPassword());
+
+		User user = userRepository.listUserByEmailAndPassword(userVO.getUserEmail(), encodedPassword);
+
+		if(user == null) {
+			throw new Exception();
+		}
+
+		userVO.setUserName(user.getUserName());
+		return userVO;
 	}
 
 }

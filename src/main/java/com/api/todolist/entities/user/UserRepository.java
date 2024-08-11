@@ -9,4 +9,7 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	
 	@Query("SELECT u FROM User u WHERE u.id = :userId")
 	public User listUserById(Long userId);
+
+	@Query("SELECT u FROM User u WHERE u.userEmail = :userEmail AND u.userPassword = :userPassword")
+	public User listUserByEmailAndPassword(String userEmail, String userPassword);
 }
